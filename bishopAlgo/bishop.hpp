@@ -22,7 +22,7 @@ enum class Moves { UpLeft, UpRight, DownLeft, DownRight };
 } // namespace bishop::board
 
 namespace bishop {
-std::string generateAscii(std::string,
+std::string generateAscii(const std::string&,
                           const app::types::u32 = bishop::board::StdWidth,
                           const app::types::u32 = bishop::board::StdHeight);
 }
