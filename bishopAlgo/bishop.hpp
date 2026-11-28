@@ -25,17 +25,19 @@ enum class Moves { UpLeft, UpRight, DownLeft, DownRight };
 
 namespace bishop::errors {
 enum class Type { Overflow, InvalidDimensions };
-}
+} // namespace bishop::errors
 
 namespace bishop::detail {
 void moveBishop(
-    const app::types::u32 move, const std::unique_ptr<app::types::u32[]> board,
+    const app::types::u32 move, const std::unique_ptr<app::types::u32[]> &board,
     std::pair<app::types::u32, app::types::u32> &bishopLoc) noexcept;
-}
+std::string
+interpolateSymbols(const std::unique_ptr<app::types::u32[]> &board) noexcept;
+} // namespace bishop::detail
 
 namespace bishop {
 std::expected<std::string, bishop::errors::Type>
 generateAscii(const std::size_t &,
               const app::types::u32 = bishop::board::StdWidth,
               const app::types::u32 = bishop::board::StdHeight) noexcept;
-}
+} // namespace bishop

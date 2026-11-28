@@ -36,7 +36,8 @@ bishop::generateAscii(const std::size_t &hash, const app::types::u32 width,
   for (std::size_t i{0}; next(i) < totalBits; i += shiftPair) {
     const app::types::u32 pair{
         static_cast<app::types::u32>((hash >> i) & keep2LeastSigBits)};
+        bishop::detail::moveBishop(pair, board, bishopLoc);
   }
 
-  return "";
+  return bishop::detail::interpolateSymbols(board);
 }
