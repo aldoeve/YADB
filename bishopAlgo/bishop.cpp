@@ -2,32 +2,41 @@
  * The bishop algorithm that generates the ascii art.
  */
 
-#include <string>
-#include <memory>
+#include <cstddef>
+#include <expected>
 #include <limits>
-#include <functional>
+#include <memory>
+#include <string>
+#include <utility>
 
 #include "bishop.hpp"
 #include "types/types.hpp"
 
-using namespace app::types;
+std::expected<std::string, bishop::errors::Type>
+bishop::generateAscii(const std::size_t &hash, const app::types::u32 width,
+                      const app::types::u32 height) noexcept {
+  if (width == 0 || height == 0) {
+    return std::unexpected(bishop::errors::Type::InvalidDimensions);
+  }
+  if (width > (std::numeric_limits<app::types::u32>::max() / height)) {
+    return std::unexpected(bishop::errors::Type::Overflow);
+  }
 
-std::string bishop::generateAscii(const std::string& text, const u32 width, const u32 height) {
-    std::hash<std::string> hasher;
-    std::size_t hash = hasher(text);
+  const app::types::u32 totalCells{width * height};
+  const auto board{std::make_unique<app::types::u32[]>(totalCells)};
+  std::pair<app::types::u32, app::types::u32> bishopLoc{width / 2, height / 2};
 
-    if ( width > ( std::numeric_limits<u32>::max() / height ) ) {
-    // call error func
-    }
-    
-    const u32 totalCells = width * height;
-    
+  constexpr const std::size_t totalBits{
+      std::numeric_limits<std::size_t>::digits};
 
-    // create board with smart pointers of u32 vals
+  const auto next = [](std::size_t a) { return a + 1; };
+  const std::size_t shiftPair{2};
+  const app::types::u32 keep2LeastSigBits{0b11u};
 
-    // call the move() to shift through pairs; ie loop 
+  for (std::size_t i{0}; next(i) < totalBits; i += shiftPair) {
+    const app::types::u32 pair{
+        static_cast<app::types::u32>((hash >> i) & keep2LeastSigBits)};
+  }
 
-    // call boardPrint() it has the work out of what each value means
-    
-    return "";
+  return "";
 }
