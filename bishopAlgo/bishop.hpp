@@ -9,6 +9,7 @@
 #include <expected>
 #include <memory>
 #include <string>
+#include <utility>
 
 #include "types/types.hpp"
 
@@ -28,6 +29,9 @@ enum class Type { Overflow, InvalidDimensions };
 } // namespace bishop::errors
 
 namespace bishop::detail {
+inline app::types::u32
+twoDimensionsToOneIndex(const std::pair<app::types::u32, app::types::u32>,
+                        const app::types::u32) noexcept;
 void moveBishop(
     const app::types::u32 move, const std::unique_ptr<app::types::u32[]> &board,
     std::pair<app::types::u32, app::types::u32> &bishopLoc) noexcept;

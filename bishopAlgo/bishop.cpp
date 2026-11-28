@@ -12,6 +12,15 @@
 #include "bishop.hpp"
 #include "types/types.hpp"
 
+inline app::types::u32 bishop::detail::twoDimensionsToOneIndex(const std::pair<app::types::u32, app::types::u32> loc, const app::types::u32 width) noexcept {
+    return loc.second * width + loc.first;
+}
+
+std::string bishop::detail::interpolateSymbols(
+    const std::unique_ptr<app::types::u32[]> &board) noexcept {
+    return "";
+}
+
 std::expected<std::string, bishop::errors::Type>
 bishop::generateAscii(const std::size_t &hash, const app::types::u32 width,
                       const app::types::u32 height) noexcept {
@@ -36,7 +45,7 @@ bishop::generateAscii(const std::size_t &hash, const app::types::u32 width,
   for (std::size_t i{0}; next(i) < totalBits; i += shiftPair) {
     const app::types::u32 pair{
         static_cast<app::types::u32>((hash >> i) & keep2LeastSigBits)};
-        bishop::detail::moveBishop(pair, board, bishopLoc);
+    bishop::detail::moveBishop(pair, board, bishopLoc);
   }
 
   return bishop::detail::interpolateSymbols(board);
